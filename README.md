@@ -15,4 +15,4 @@ Project Digital Waitingroom
 | POST          | /createAppointment | **Body:** name:String, date:Date(), time:String(HH:MM), name:String, estDuration:String(minutes) </br> **Headers:** authorization:String(JWToken) | HTTP Status code: 200 OK |
 | POST          | /login             | **Body:** username:String, password:string(SHA256 hashed) | 200 OK + JWToken |
 | GET           | /getAppointments   | **Headers:** authorization:String(JWToken) | Appointment[] |
-| GET           | /getQueuePosition  | **Body:** name:String </br> **Headers:** authorization:String(JWToken) | Queueposition:int |
+| GET           | /getQueuePosition  | **QueryString:** name:String </br> **Headers:** authorization:String(JWToken) | Queueposition:int |
