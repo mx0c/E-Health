@@ -9,28 +9,10 @@ Project Digital Waitingroom
 * TODO
 
 ## BackendEndpoints:
-* POST /createAppointment
-** Request: 
-*** Body: name:String, date:Date(), time:String(HH:MM), name:String, estDuration:String(minutes)
-*** Headers: authorization:String(JWToken)
-** Response:
-*** HTTP Status code: 200 OK
 
-* POST /login
-** Request: 
-*** Body: username:String, password:string(SHA256 hashed)
-** Response:
-*** 200 OK + JWToken
-
-* GET /getAppointments
-** Request: 
-*** Headers: authorization:String(JWToken)
-** Response: 
-*** Appointment[]
-
-* GET /getQueuePosition
-** Request: 
-*** Body: name:String
-*** Headers: authorization:String(JWToken)
-** Response: 
-*** Queueposition:int
+| Method        | Name               | Request  | Response |
+| ------------- | ------------------ | -------- | -------- |
+| POST          | /createAppointment | **Body:** name:String, date:Date(), time:String(HH:MM), name:String, estDuration:String(minutes) </br> **Headers:** authorization:String(JWToken) | HTTP Status code: 200 OK |
+| POST          | /login             | **Body:** username:String, password:string(SHA256 hashed) | 200 OK + JWToken |
+| GET           | /getAppointments   | **Headers:** authorization:String(JWToken) | Appointment[] |
+| GET           | /getQueuePosition  | **Body:** name:String </br> **Headers:** authorization:String(JWToken) | Queueposition:int |
