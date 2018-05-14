@@ -5,7 +5,7 @@ var jwt = require('jsonwebtoken')
 
 module.exports = router => {
   router.post('/createAppointment', (req, res) => {
-    dbInterface.createAppointment(req.body.name,req.body.date,req.time.name,req.body.estDuration,req.headers.authorization)
+    dbInterface.createAppointment(req.body.name,req.body.date,req.body.time,req.body.estDuration,req.headers.authorization)
     .then(() => {
       res.sendStatus(200)
     }).catch((errCode) => {
@@ -32,4 +32,14 @@ module.exports = router => {
       res.sendStatus(errCode)
     })
   });
+
+  router.get('/getQueuePosition',(req,res) => {
+    dbInterface.getQueuePosition(req.query.name, req.headers.authorization)
+    .then((result)=>{
+      res.status(200)
+      res.send(result)
+    }).catch((errCode)=>{
+      res.sendStatus(errCode)
+    })
+  })
 }

@@ -45,6 +45,31 @@ exports.checkUser = (username, password) => {
   })
 }
 
+exports.getQueuePosition = (name,token) => {
+  return new Promise((resolve,reject) => {
+    if (!verifyJwt(token)) return reject(401)
+    var appointment;
+    MongoClient.connect(url, function(err, db) {
+      if (err) resolve(500);
+      db.collection("appointments").find({name: name}).sort({date: 1}).toArray((err, result)=>{
+        if (err) resolve(500);
+        appointment = result[0]
+        db.collection("appointments").find().sort({date: 1}).toArray((err, result)=>{
+          var count = 0
+          result.forEach(elem=>{
+            if(elem == appointment){
+              db.close();
+              resolve(count)
+            }
+            count++
+          })
+          reject(404)
+        })
+      })
+    })
+  })
+}
+
 exports.getAppointments = (token) => {
   return new Promise((resolve, reject) => {
     if (!verifyJwt(token)) return reject(401)
