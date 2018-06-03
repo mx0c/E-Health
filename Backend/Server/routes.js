@@ -9,7 +9,11 @@ module.exports = router => {
     .then(() => {
       res.sendStatus(200)
     }).catch((errCode) => {
-      res.sendStatus(errCode)
+      if (errCode >= 100 && errCode < 600){
+			res.sendStatus(errCode);
+		}else{
+			res.sendStatus(500);
+		}
     })
   })
 
@@ -19,7 +23,11 @@ module.exports = router => {
       res.status(200)
       return res.json({token: jwt.sign({ username: req.body.username}, config.secret, { expiresIn: "1h" })});
     }).catch((errCode) => {
-      res.sendStatus(errCode)
+		if (errCode >= 100 && errCode < 600){
+			res.sendStatus(errCode);
+		}else{
+			res.sendStatus(500);
+		}
     })
   })
 
@@ -29,17 +37,25 @@ module.exports = router => {
       res.status(200)
       res.send(result)
     }).catch((errCode)=>{
-      res.sendStatus(errCode)
+      if (errCode >= 100 && errCode < 600){
+			res.sendStatus(errCode);
+		}else{
+			res.sendStatus(500);
+		}
     })
   });
 
   router.get('/getQueuePosition',(req,res) => {
     dbInterface.getQueuePosition(req.query.name, req.headers.authorization)
     .then((result)=>{
-      res.status(200)
-      res.send(result)
+      res.status(200)	
+      res.send(result.toString())
     }).catch((errCode)=>{
-      res.sendStatus(errCode)
+      if (errCode >= 100 && errCode < 600){
+			res.sendStatus(errCode);
+		}else{
+			res.sendStatus(500);
+		}
     })
   })
 }
