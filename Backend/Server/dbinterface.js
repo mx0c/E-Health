@@ -15,17 +15,20 @@ function verifyJwt(token){
 }
 
 function compareAppointments(a1,a2){
-	console.log((a1.name == a2.name && a1.date == a2.date && a1.time == a2.time && a1.estDuration == a2.estDuration))
-	return (a1.name == a2.name && a1.date == a2.date && a1.time == a2.time && a1.estDuration == a2.estDuration)
-}
+	try{
+		return (a1.name == a2.name && a1.bdate == a2.bdate && a1.date == a2.date && a1.time == a2.time && a1.estDuration == a2.estDuration)
+	}catch(e){
+		return false
+	}
+}	
 
-exports.createAppointment = (name, date, time, estDuration, token) => {
+exports.createAppointment = (name, bdate, date, time, estDuration, token) => {
   return new Promise((resolve,reject) => {
     if (!verifyJwt(token)) return reject(401)
     MongoClient.connect(url, (err, db) => {
       if (err) return reject(500)
       var dbo = db.db("e-health-db")
-      var myobj = { name: name, date: date, time: time, estDuration: estDuration };
+      var myobj = { name: name, bdate: bdate, date: date, time: time, estDuration: estDuration };
       dbo.collection("appointments").insertOne(myobj, (err, res) => {
         if (err) return reject(500)
         db.close()
@@ -51,21 +54,18 @@ exports.checkUser = (uname, pass) => {
   })
 }
 
-exports.getQueuePosition = (name,token) => {
+exports.getQueuePosition = (name,bdate) => {
   return new Promise((resolve,reject) => {
-    if (!verifyJwt(token)) return reject(401)
     var appointment;
     MongoClient.connect(url, function(err, db) {
       if (err) resolve(500);
 	  var dbo = db.db("e-health-db")
-      dbo.collection("appointments").find({name: name}).sort({date: 1}).toArray((err, result)=>{
+      dbo.collection("appointments").find({name: name, bdate: new Date(bdate)}).sort({date: 1}).toArray((err, result)=>{
         if (err) resolve(500);
         appointment = result[0]
-		console.log(appointment)
         dbo.collection("appointments").find().sort({date: 1}).toArray((err, result)=>{
           var count = 0
           result.forEach(elem=>{
-			console.log(elem)
             if(compareAppointments(elem,appointment)){
               db.close();
               resolve(count)
