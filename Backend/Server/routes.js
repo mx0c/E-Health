@@ -21,8 +21,10 @@ module.exports = router => {
     dbInterface.checkUser(req.body.username,req.body.password)
     .then(()=>{
       res.status(200)
+      console.log(`user ` + req.body.username + ` logged in`)
       return res.json({token: jwt.sign({ username: req.body.username}, config.secret, { expiresIn: "1h" })});
     }).catch((errCode) => {
+    console.log(`user ` + req.body.username + ` login FAILED`)
 		if (errCode >= 100 && errCode < 600){
 			res.sendStatus(errCode);
 		}else{
