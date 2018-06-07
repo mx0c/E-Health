@@ -11,6 +11,8 @@
     <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"
     rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="js/wartezimmer/script.js"></script>
     
 </head>
   
@@ -62,24 +64,23 @@
     <div class="container">
       <ul class="list-group">
         <li class="list-group-item">
-          Ursprünglicher Termin: 10:30 Uhr.
+        <p id="appointment"></p>
         </li>
       </ul>
       <ul class="list-group">
       </ul>
       <!-- Example row of columns -->
       <div class="well">
-        <h3>
-          Leider gibt es eine Verspätung! (+38 Minuten)
+        <h3 id=pdelay>
+            
         </h3>
-        <p>
-          Vor Ihnen sind noch drei weitere Patienten. Ihr Termin wird vorraussichtlich
-          38 Minuten später statt finden!
+        <p id="pos">
+          
         </p>
       </div>
       <ul class="list-group">
         <li class="list-group-item">
-          Geschätzter tatsächlicher Termin: 11:08 Uhr.
+          <p id="nTime"></p>
         </li>
       </ul>
       <ul class="list-group">
