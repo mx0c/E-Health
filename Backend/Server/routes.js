@@ -2,6 +2,7 @@
 var config = require('./config.json')
 var dbInterface = require('./dbinterface')
 var jwt = require('jsonwebtoken')
+var path = require('path');
 
 module.exports = router => {
   router.post('/createAppointment', (req, res) => {
@@ -28,6 +29,10 @@ module.exports = router => {
   			res.sendStatus(500);
   		}
     })
+  });
+  
+  router.get('/praxis.html', function (req, res) {
+    res.sendFile(path.join(__dirname + '/../../Frontend/praxis.html'));
   });
 
   router.post('/login',(req, res) => {
