@@ -10,8 +10,13 @@
     </title>
     <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"
     rel="stylesheet">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    
     <link href="css/style.css" rel="stylesheet">
   
+    <script src="js/praxis/script.js"></script>
+    
 </head>
   
   <body>
@@ -85,106 +90,44 @@
             </th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <th scope="row">
-              1
-            </th>
-            <td>
-              name
-            </td>
-            <td>
-              xx.xx.xxxx
-            </td>
-            <td>
-              13:00 Uhr
-            </td>
-            <td>
-              15 min
-            </td>
-            <td>
-              <input type="checkbox">
-            </td>
-            <td>
-              <a href="#" class="btn btn-default">Löschen</a>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">
-              2
-            </th>
-            <td>
-              name
-            </td>
-            <td>
-              xx.xx.xxxx
-            </td>
-            <td>
-              13:15 Uhr
-            </td>
-            <td>
-              30 min
-            </td>
-            <td>
-              <input type="checkbox">
-            </td>
-            <td>
-              <a href="#" class="btn btn-default">Löschen</a>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">
-              3
-            </th>
-            <td>
-              name
-            </td>
-            <td>
-              xx.xx.xxxx
-            </td>
-            <td>
-              13:45 Uhr
-            </td>
-            <td>
-              15 min
-            </td>
-            <td>
-              <input type="checkbox">
-            </td>
-            <td>
-              <a href="#" class="btn btn-default">Löschen</a>
-            </td>
-          </tr>
+        <tbody id="appointments">    
         </tbody>
-      </table>
+      </table>   
       <hr>
       <div class="form-group">
         <div class="form-group">
           <label>
             Name
           </label>
-          <input type="text" class="form-control">
-        </div>
+          <input id="name" type="text" class="form-control">
+        </div>   
         <div class="form-group">
           <label>
             Geburtsdatum
-          </label>
-          <input type="text" class="form-control">
+          </label>          
+          <input id="bdate" type="date" class="form-control">
         </div>
         <div class="form-group">
           <label>
-            Uhrzeit
+            Termin Datum
             <br>
           </label>
-          <input type="text" class="form-control">
+          <input id="date" type="date" class="form-control">
         </div>
         <div class="form-group">
           <label>
-            Termindauer
+            Termin Uhrzeit
+            <br>
           </label>
-          <input type="text" class="form-control">
+          <input id="time" type="time" class="form-control">
         </div>
-        <a href="#" class="btn btn-default">Termin Anlegen</a>
+        <div class="form-group">
+          <label>
+            Termindauer (min)
+          </label>
+          <input id="duration" type="number" pattern="[0-9]" class="form-control">
+        </div>
+        <a id="createuser" class="btn btn-default">Termin Anlegen</a>
       </div>
       <hr>
       <ul class="list-group">
@@ -202,8 +145,6 @@
     <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"
     >
     </script>
-  
-    <script src="js/screen-54495538b7.js"></script>
 </body>
 
 </html>
