@@ -68,7 +68,6 @@ $(document).ready(function () {
       },
       data:JSON.stringify({name:name,bdate:bdate,date:date,time:time,estDuration:duration}),
       contentType:"application/json; charset=utf8",
-      dataType:"json",
       success: function() {
         console.log("Appointment created!");     
        
