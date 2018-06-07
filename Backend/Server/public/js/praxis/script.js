@@ -11,8 +11,7 @@ function deleteAppointment(id) {
       data:JSON.stringify({id:id}),
       contentType:"application/json; charset=utf8",
       success: function() {
-      $(location).attr('href', '/praxis.html')
-        
+        $(location).attr('href', '/praxis.html')
       },
       error: function (xhr, ajaxOptions, thrownError) {
         console.log(xhr.status);
@@ -37,8 +36,7 @@ $(document).ready(function () {
     },
     success: function(data, status) {    
       var html = ""   
-      var arrayLength = data.length;
-      //console.log(data[0]._id)
+      var arrayLength = data.length; 
       for (var i = 0; i < arrayLength; i++) {
           html += '<tr>'
           html += '<th scope="row">'

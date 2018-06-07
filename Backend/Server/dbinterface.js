@@ -4,6 +4,7 @@ var config = require('./config.json')
 var url = config.mongoUrl
 var MongoClient = mongo.MongoClient
 var jwt = require('jsonwebtoken')
+var ObjectID = mongo.ObjectID
 
 function verifyJwt(token){
   try {
@@ -28,7 +29,7 @@ exports.deleteAppointment = (id, token) => {
     MongoClient.connect(url, (err, db) => {
       if (err) return reject(500)
       var dbo = db.db("e-health-db")
-      var query = {_id:id}
+      var query = {_id:ObjectID(id)}
       dbo.collection("appointments").deleteOne(query,(err,obj) => {
         if (err) return reject(500)
         db.close();
