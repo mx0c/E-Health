@@ -20,7 +20,23 @@ function compareAppointments(a1,a2){
 	}catch(e){
 		return false
 	}
-}	
+}
+
+exports.deleteAppointment = (id, token) => {
+  return new Promise((resolve,reject) => {
+    if (!verifyJwt(token)) return reject(401)
+    MongoClient.connect(url, (err, db) => {
+      if (err) return reject(500)
+      var dbo = db.db("e-health-db")
+      var query = {_id:id}
+      dbo.collection("appointments").deleteOne(query,(err,obj) => {
+        if (err) return reject(500)
+        db.close();
+        resolve()
+      })
+    })
+  })
+}
 
 exports.createAppointment = (name, bdate, date, time, estDuration, token) => {
   return new Promise((resolve,reject) => {

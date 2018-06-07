@@ -17,6 +17,19 @@ module.exports = router => {
     })
   })
 
+  router.post('/deleteAppointment',(req, res)=>{
+    dbInterface.deleteAppointment(req.body.id, req.headers.authorization)
+    .then(()=>{
+      res.sendStatus(200);
+    }).catch((errCode)=>{
+      if (errCode >= 100 && errCode < 600){
+  			res.sendStatus(errCode);
+  		}else{
+  			res.sendStatus(500);
+  		}
+    })
+  });
+
   router.post('/login',(req, res) => {
     dbInterface.checkUser(req.body.username,req.body.password)
     .then(()=>{
@@ -50,7 +63,7 @@ module.exports = router => {
   router.get('/getQueuePosition',(req,res) => {
     dbInterface.getQueuePosition(req.query.name, req.query.bdate)
     .then((result)=>{
-      res.status(200)	
+      res.status(200)
       res.send(result.toString())
     }).catch((errCode)=>{
       if (errCode >= 100 && errCode < 600){
