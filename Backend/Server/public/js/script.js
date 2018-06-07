@@ -9,4 +9,23 @@ $(document).ready(function () {
 		console.log(data);
     });
   });
+  
+  $("#patientlogin").click(function () {    
+        
+    var name = $("#patientname").val();
+    var pdate = $("#patientdate").val();
+        
+	pObj = {name:name,bdate:pdate}
+	
+	$.ajax({
+		url:"/getQueuePosition",
+	    type:"GET",
+		data:$.param(pObj),
+	    contentType:"application/json; charset=utf-8",
+	    dataType:"json",
+	    success: function(res){
+			console.log(res);
+	    }
+	}); 
+  });
 });
