@@ -19,4 +19,4 @@ Project Digital Waitingroom
 | POST          | /login             | **Body:** username:String, password:string(SHA256 hashed) | 200 OK + JWToken |
 | GET           | /getAppointments   | **Headers:** authorization:String(JWToken) | Appointment[] |
 | GET           | /getQueuePosition  | **QueryString:** name:String, bdate:string(DD.MM.YYYY)  | Queueposition:int |
-| POST		    | /deleteAppointment | **Body:** id:String(_id von appointment) </br> **Headers:** authorization:String(JWToken)|
+| POST		    | /deleteAppointment | **Body:** id:String(_id von appointment) </br> **Headers:** authorization:String(JWToken)| 200 OK | 
