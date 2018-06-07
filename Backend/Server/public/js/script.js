@@ -18,7 +18,7 @@ $(document).ready(function () {
         $(location).attr('href', '/praxis.html')
         
       },
-      error: function(data) {
+        error: function(data) {
         console.log("login failed");
         document.cookie="access_token= "
       }
@@ -39,8 +39,13 @@ $(document).ready(function () {
 	    contentType:"application/json; charset=utf-8",
 	    dataType:"json",
 	    success: function(res){
-			console.log(res);
-	    }
-	}); 
+			console.log("Appointment found");
+            $(location).attr('href', 'warteliste.html')
+        },
+        error: function(res) {
+            
+        alert("No Appointment found");
+        }    
+	});
   });
 });
