@@ -17,6 +17,7 @@ function verifyJwt(token){
 
 function compareAppointments(a1,a2){
 	try{
+    console.log(a1.name == a2.name , a1.bdate.toString() == a2.bdate.toString() , a1.date.toString() == a2.date.toString() , a1.time == a2.time , a1.estDuration == a2.estDuration)
 		return (a1.name == a2.name && a1.bdate.toString() == a2.bdate.toString() && a1.date.toString() == a2.date.toString() && a1.time == a2.time && a1.estDuration == a2.estDuration)
 	}catch(e){
 		return false
@@ -62,7 +63,7 @@ exports.createAppointment = (name, bdate, date, time, estDuration, token) => {
     MongoClient.connect(url, (err, db) => {
       if (err) return reject(500)
       var dbo = db.db("e-health-db")
-      var myobj = { name: name, bdate: bdate, date: date, time: time, estDuration: estDuration, finished: false };
+      var myobj = { name: name, bdate: new Date(bdate), date: new Date(date), time: time, estDuration: estDuration, finished: false };
       dbo.collection("appointments").insertOne(myobj, (err, res) => {
         if (err) return reject(500)
         db.close()

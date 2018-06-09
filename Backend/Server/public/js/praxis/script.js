@@ -96,7 +96,7 @@ $(document).ready(function () {
         headers: {
         "authorization":cookieValue
         },
-        data:JSON.stringify({name:name,bdate:new Date(bdate),date:new Date(date),time:time,estDuration:duration}),
+        data:JSON.stringify({name:name,bdate:bdate,date:date,time:time,estDuration:duration}),
         contentType:"application/json; charset=utf8",
         success: function() {
           $(location).attr('href', '/praxis.html')
