@@ -23,6 +23,24 @@ function compareAppointments(a1,a2){
 	}
 }
 
+exports.changeAppointmentStatus = (id, token, status) => {
+  return new Promise((resolve,reject)=>{
+    if (!verifyJwt(token)) return reject(401)
+    MongoClient.connect(url, (err, db) => {
+      if (err) return reject(500)
+      var dbo = db.db("e-health-db")
+      var query = {_id:ObjectID(id)}
+      var values = { $set: {finished:status}}
+      dbo.collection("appointments").updateOne(query,values,(err,res)=>{
+        if (err) return reject(500)
+        db.close();
+        resolve()
+      })
+      reject(500)
+    })
+  })
+}
+
 exports.deleteAppointment = (id, token) => {
   return new Promise((resolve,reject) => {
     if (!verifyJwt(token)) return reject(401)

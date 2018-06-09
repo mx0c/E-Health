@@ -18,6 +18,19 @@ module.exports = router => {
     })
   })
 
+  router.post('/changeAppointmentStatus',(req,res)=>{
+    dbInterface.changeAppointmentStatus(req.body.id, req.headers.authorization,req.body.status)
+    .then(()=>{
+      res.sendStatus(200)
+    }).catch((errCode)=>{
+      if (errCode >= 100 && errCode < 600){
+        res.sendStatus(errCode);
+      }else{
+        res.sendStatus(500);
+      }
+    })
+  })
+
   router.post('/deleteAppointment',(req, res)=>{
     dbInterface.deleteAppointment(req.body.id, req.headers.authorization)
     .then(()=>{
@@ -30,7 +43,7 @@ module.exports = router => {
   		}
     })
   });
-  
+
   router.get('/praxis.html', function (req, res) {
     res.sendFile(path.join(__dirname + '/../../Frontend/praxis.html'));
   });
