@@ -1,6 +1,41 @@
-
+/*
+ Primary #12bbad
+ Secondary #4f70ce
+ Info #ccc
+ Light #f3f3f3
+ Dark #151515
+ */
+ 
 /* Move down content because we have a fixed navbar that is 50px tall */
 body {
   padding-top: 50px;
   padding-bottom: 20px;
  }
+ 
+.btn { 
+ color:#f3f3f3;
+ background-color: #12bbad;
+ border-radius:0px;
+ }
+ 
+.btn:hover{
+	 background-color: #ccc;
+ }
+ 
+ .btn:focus{
+	 background-color:#ccc;
+ }
+ 
+
+body {
+	font-family: -apple-system, BlinkMacSystemFont,"Helvetica Neue" ,Helvetica Neue, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+	}
+	
+.form-control{
+	border-radius:0px;
+}
+
+.panel{
+	border-radius:0px;
+}
+
