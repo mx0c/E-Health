@@ -63,7 +63,13 @@ exports.createAppointment = (name, bdate, date, time, estDuration, token) => {
     MongoClient.connect(url, (err, db) => {
       if (err) return reject(500)
       var dbo = db.db("e-health-db")
-      var myobj = { name: name, bdate: new Date(bdate), date: new Date(date), time: time, estDuration: estDuration, finished: false };
+      //extract hours and seconds from String
+      var time = time.split(":");
+      //generate Date object with time
+      var myDate = new Date(date);
+      myDate.setHours(time[0])
+      myDate.setMinutes(time[1])
+      var myobj = { name: name, bdate: new Date(bdate), date: myDate, time: time, estDuration: estDuration, finished: false };
       dbo.collection("appointments").insertOne(myobj, (err, res) => {
         if (err) return reject(500)
         db.close()
@@ -95,6 +101,7 @@ exports.getQueuePosition = (name,bdate) => {
     MongoClient.connect(url, function(err, db) {
     if (err) resolve(500);
 	  var dbo = db.db("e-health-db")
+      //find my next appointment
       dbo.collection("appointments").find({name: name, bdate: new Date(bdate)}).sort({date: -1}).toArray((err, result)=>{
         if (err) resolve(500);
         appointment = result[0]

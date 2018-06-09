@@ -10,7 +10,7 @@ MongoClient.connect(url, function(err, db) {
     dbo.createCollection("users", function(err, res) {
       if (err) throw err;
       console.log("user Collection created!");
-      var date = new Date(new Date().setHours(2,0,0,0));
+      var date = new Date(new Date().setHours(12,18,0,0));
 	  console.log(date)
       var myobj = { name: "Hans Wurst", bdate: date, date: date, time: "10:18", estDuration: "30", finished:false };
       dbo.collection("appointments").insertOne(myobj, function(err, res) {
