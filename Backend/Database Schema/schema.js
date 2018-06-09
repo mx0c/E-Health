@@ -10,11 +10,11 @@ MongoClient.connect(url, function(err, db) {
     dbo.createCollection("users", function(err, res) {
       if (err) throw err;
       console.log("user Collection created!");
-      var myobj = { name: "Hans Wurst", bdate: new Date(), date: new Date(), time: "10:18", estDuration: "30" };
+      var myobj = { name: "Hans Wurst", bdate: new Date(), date: new Date(), time: "10:18", estDuration: "30", finished:false };
       dbo.collection("appointments").insertOne(myobj, function(err, res) {
         if (err) throw err;
         console.log("1 document inserted");
-        var myobj = { username: "admin", password: "8C6976E5B5410415BDE908BD4DEE15DFB167A9C873FC4BB8A81F6F2AB448A918" };
+        var myobj = { username: "admin", password: "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918" };
         dbo.collection("users").insertOne(myobj, function(err, res) {
           if (err) throw err;
           console.log("1 document inserted");
