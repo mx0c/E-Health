@@ -64,11 +64,11 @@ exports.createAppointment = (name, bdate, date, time, estDuration, token) => {
       if (err) return reject(500)
       var dbo = db.db("e-health-db")
       //extract hours and seconds from String
-      var time = time.split(":");
+      var mytime = time.split(":");
       //generate Date object with time
       var myDate = new Date(date);
-      myDate.setHours(time[0])
-      myDate.setMinutes(time[1])
+      myDate.setHours(mytime[0])
+      myDate.setMinutes(mytime[1])
       var myobj = { name: name, bdate: new Date(bdate), date: myDate, time: time, estDuration: estDuration, finished: false };
       dbo.collection("appointments").insertOne(myobj, (err, res) => {
         if (err) return reject(500)

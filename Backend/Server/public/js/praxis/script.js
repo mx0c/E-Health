@@ -89,6 +89,7 @@ $(document).ready(function () {
     }
     else
     {
+		console.log(time)
       var cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1");
       $.ajax({
         url:"/createAppointment",
