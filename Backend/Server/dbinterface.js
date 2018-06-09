@@ -29,6 +29,7 @@ exports.changeAppointmentStatus = (id, token, status) => {
     MongoClient.connect(url, (err, db) => {
       if (err) return reject(500)
       var dbo = db.db("e-health-db")
+	  console.log(id,token,status)
       var query = {_id:ObjectID(id)}
       var values = { $set: {finished:status}}
       dbo.collection("appointments").updateOne(query,values,(err,res)=>{
@@ -36,7 +37,6 @@ exports.changeAppointmentStatus = (id, token, status) => {
         db.close();
         resolve()
       })
-      reject(500)
     })
   })
 }
