@@ -44,9 +44,23 @@ module.exports = router => {
     })
   });
 
+  //wird entfernt
   router.get('/praxis.html', function (req, res) {
     res.sendFile(path.join(__dirname + '/../../Frontend/praxis.html'));
   });
+
+  router.post('/isTokenValid',(req,res) => {
+    dbInterface.isTokenValid(req.headers.authorization)
+    .then(()=>{
+      res.sendStatus(200)
+    }).catch((errCode)=>{
+      if (errCode >= 100 && errCode < 600){
+  			res.sendStatus(errCode);
+  		}else{
+  			res.sendStatus(500);
+  		}
+    })
+  })
 
   router.post('/login',(req, res) => {
     dbInterface.checkUser(req.body.username,req.body.password)

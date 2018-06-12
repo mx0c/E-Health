@@ -21,3 +21,4 @@ Project Digital Waitingroom
 | GET           | /getQueuePosition  | **QueryString:** name:String, bdate:string(YYYY-MM-DD)  | Queueposition:int |
 | POST		      | /deleteAppointment | **Body:** id:String(_id von appointment) </br> **Headers:** authorization:String(JWToken)| 200 OK |
 | POST          | /changeAppointmentStatus | **Body:** id:String(_id von appointment), status:boolean(true=finished)</br>**Headers:** authorization:String(JWToken)| 200 OK |
+| POST          | /isTokenValid | **Headers:** authorization:String(JWToken)| valid=200 OK; notValid=401 UNAUTHORIZED |

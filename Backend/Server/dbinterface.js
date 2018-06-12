@@ -24,6 +24,15 @@ function compareAppointments(a1,a2){
 	}
 }
 
+exports.isTokenValid = (token) => {
+  return new Promise((resolve,reject)=>{
+    if (!verifyJwt(token)){
+      return reject(401)
+    }
+    resolve()
+  })
+}
+
 exports.changeAppointmentStatus = (id, token, status) => {
   return new Promise((resolve,reject)=>{
     if (!verifyJwt(token)) return reject(401)
