@@ -38,7 +38,7 @@ $(document).ready(function () {
 
 
 	$.ajax({
-		url:"/getQueuePosition",
+		url:"/getQueueInformations",
 	    type:"GET",
 		  data:$.param(pObj),
 	    contentType:"application/json; charset=utf-8",
