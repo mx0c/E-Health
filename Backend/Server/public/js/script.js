@@ -29,17 +29,14 @@ $(document).ready(function () {
 
     var name = $("#patientname").val();
     var pdate = $("#patientdate").val();
-<<<<<<< HEAD
 	pObj = {name:name,bdate:pdate}
       
     localStorage.setItem("pname",name);
     localStorage.setItem("pdate",pdate);
-	
-=======
 
 	pObj = {name:name,bdate:pdate}
 
->>>>>>> f2022ce2ff0285445edacf8ad32e27596d59a540
+
 	$.ajax({
 		url:"/getQueuePosition",
 	    type:"GET",
@@ -52,14 +49,9 @@ $(document).ready(function () {
             $(location).attr('href', '/warteliste.html')
         },
         error: function(res) {
-<<<<<<< HEAD
-            alert("No Appointment found");
-        }    
-=======
 
-        alert("No Appointment found");
-        }
->>>>>>> f2022ce2ff0285445edacf8ad32e27596d59a540
+            alert("No Appointment found");
+        } 
 	});
   });
 });
