@@ -1,9 +1,9 @@
 
 $(document).ready(function () {
-  $("#userlogin").click(function () {    
+  $("#userlogin").click(function () {
     var name = $("#loginname").val();
     var passwd = sha256($("#loginpassword").val());
-	
+
     $.ajax({
       url:"/login",
       type:"POST",
@@ -13,29 +13,29 @@ $(document).ready(function () {
       success: function(data, status) {
         console.log("login success");
         // save access token in cookie
-        document.cookie="access_token=" + data.token        
-       
+        document.cookie="access_token=" + data.token
+
         $(location).attr('href', '/praxis.html')
-        
+
       },
         error: function(data) {
         console.log("login failed");
         document.cookie="access_token= "
       }
-    }); 
+    });
   });
-  
-  $("#patientlogin").click(function () {    
-        
+
+  $("#patientlogin").click(function () {
+
     var name = $("#patientname").val();
     var pdate = $("#patientdate").val();
-        
+
 	pObj = {name:name,bdate:pdate}
-	
+
 	$.ajax({
 		url:"/getQueuePosition",
 	    type:"GET",
-		data:$.param(pObj),
+		  data:$.param(pObj),
 	    contentType:"application/json; charset=utf-8",
 	    dataType:"json",
 	    success: function(res){
@@ -43,9 +43,9 @@ $(document).ready(function () {
             $(location).attr('href', 'warteliste.html')
         },
         error: function(res) {
-            
+
         alert("No Appointment found");
-        }    
+        }
 	});
   });
 });

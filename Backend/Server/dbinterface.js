@@ -6,6 +6,9 @@ var MongoClient = mongo.MongoClient
 var jwt = require('jsonwebtoken')
 var ObjectID = mongo.ObjectID
 
+//*************************************************************************************************
+//*************************************** Helper Functions ****************************************
+
 function verifyJwt(token){
   try {
     var decoded = jwt.verify(token, config.secret)
@@ -23,6 +26,8 @@ function compareAppointments(a1,a2){
 		return false
 	}
 }
+
+//*************************************************************************************************
 
 exports.isTokenValid = (token) => {
   return new Promise((resolve,reject)=>{
@@ -104,24 +109,26 @@ exports.checkUser = (uname, pass) => {
   })
 }
 
-exports.getQueuePosition = (name,bdate) => {
+exports.getQueueInformations = (name,bdate) => {
   return new Promise((resolve,reject) => {
     var appointment;
+    var delayDuration = 0;
     MongoClient.connect(url, function(err, db) {
     if (err) resolve(500);
-	  var dbo = db.db("e-health-db")
+	  var dbo = db.db("e-health-db");
       //find my next appointment
       dbo.collection("appointments").find({name: name, bdate: new Date(bdate)}).sort({date: -1}).toArray((err, result)=>{
         if (err) resolve(500);
-        appointment = result[0]
+        appointment = result[0];
         dbo.collection("appointments").find().sort({date: -1}).toArray((err, result)=>{
-          var count = 0
+          var count = 0;
           result.forEach(elem=>{
             if(compareAppointments(elem,appointment)){
               db.close();
-              return resolve(count)
+              return resolve({position:count.toString(),appointmentTime:appointment.time,delayDuration:delayDuration.toString()});
             }
-            count++
+            delayDuration += parseInt(elem.estDuration);
+            count++;
           })
           reject(404)
         })

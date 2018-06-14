@@ -92,11 +92,11 @@ module.exports = router => {
     })
   });
 
-  router.get('/getQueuePosition',(req,res) => {
-    dbInterface.getQueuePosition(req.query.name, req.query.bdate)
+  router.get('/getQueueInformations',(req,res) => {
+    dbInterface.getQueueInformations(req.query.name, req.query.bdate)
     .then((result)=>{
       res.status(200)
-      res.send(result.toString())
+      res.send(result)
     }).catch((errCode)=>{
       if (errCode >= 100 && errCode < 600){
 			res.sendStatus(errCode);
