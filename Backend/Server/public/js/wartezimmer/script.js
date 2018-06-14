@@ -1,6 +1,6 @@
 $(document).ready(function () {
-  
   var cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+<<<<<<< HEAD
   var pname = localStorage.getItem("pname");
   var pdate = localStorage.getItem("pdate");
 
@@ -9,20 +9,36 @@ $(document).ready(function () {
     
   document.getElementById('pname').innerHTML = ("Ihre Warteliste "+ localStorage.getItem("pname"))
     
+=======
+
+>>>>>>> f2022ce2ff0285445edacf8ad32e27596d59a540
   $.ajax({
-    url:"/getAppointments",
+    url:"/getQueuePosition",
     type:"GET",
     data: $.param(pObj),
     headers: {
       "authorization":cookieValue
     },
     success: function(data, status) {
+<<<<<<< HEAD
         
         delay = ""
         
         var arrayLength = data.length;
         for (var i = 0; i < arrayLength; i++) {
           delay += data[i].estDuration
+=======
+      var delay = ""
+      var position = ""
+      var newTime = ""
+      var arrayLength = data.length;
+
+      for (var i = 0; i < arrayLength; i++) {
+          position += data[i].name
+          delay += data[i].time
+          delay += data[i].estDuration
+
+>>>>>>> f2022ce2ff0285445edacf8ad32e27596d59a540
       }
         console.log(data)
         document.getElementById('appointment').innerHTML = ("Ihr Termin ist ursprünglich um "+time +" Uhr.")
@@ -34,6 +50,7 @@ $(document).ready(function () {
         document.getElementById('appointment').innerHTML = "Authorization FAILED"
     }
   });
+<<<<<<< HEAD
 	
 	$.ajax({
 		url:"/getQueuePosition",
@@ -51,3 +68,6 @@ $(document).ready(function () {
         }    
 	});
   });
+=======
+});
+>>>>>>> f2022ce2ff0285445edacf8ad32e27596d59a540
