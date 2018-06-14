@@ -29,8 +29,10 @@ $(document).ready(function () {
         
     var name = $("#patientname").val();
     var pdate = $("#patientdate").val();
-        
 	pObj = {name:name,bdate:pdate}
+      
+    localStorage.setItem("pname",name);
+    localStorage.setItem("pdate",pdate);
 	
 	$.ajax({
 		url:"/getQueuePosition",
@@ -40,11 +42,11 @@ $(document).ready(function () {
 	    dataType:"json",
 	    success: function(res){
 			console.log("Appointment found");
-            $(location).attr('href', 'warteliste.html')
+            
+            $(location).attr('href', '/warteliste.html')
         },
         error: function(res) {
-            
-        alert("No Appointment found");
+            alert("No Appointment found");
         }    
 	});
   });
