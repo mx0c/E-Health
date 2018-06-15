@@ -1,7 +1,7 @@
 
 // document ready function
 $(document).ready(function () {
-  console.log("praxis page loaded x");
+  console.log("praxis page loaded");
 
   // load appointments
   GetAppointments()
@@ -18,8 +18,6 @@ $(document).ready(function () {
 
     if ((name == "")||(bdate == "")||(date == "")||(time == "")||(duration == ""))
     {
-      console.log("test")
-
       document.getElementById("invalideText").innerHTML = "Bitte alles ausfüllen!";
     }
     else
@@ -86,6 +84,32 @@ function deleteAppointment(id) {
     });
 }
 
+// change status of appointment
+// called after checking or unchecking a status checkbox
+function ChangeStatus(id) {
+  var cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+  
+  var checkbox = document.getElementById(id+"_c");
+  var status = checkbox.checked
+  
+  $.ajax({
+    url:"/changeAppointmentStatus",
+    type:"POST",
+    headers: {
+    "authorization":cookieValue
+    },
+    data:JSON.stringify({id:id, status:status}),
+    contentType:"application/json; charset=utf8",
+    success: function() {
+      console.log("Status changed")
+    },
+    error: function (xhr, ajaxOptions, thrownError) {
+      console.log(xhr.status);
+      console.log(thrownError);
+    }
+  });
+}
+
 // get all appointments from the database and write them in the html
 function GetAppointments() {
   var cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1");
@@ -97,11 +121,10 @@ function GetAppointments() {
       "authorization":cookieValue
     },
     success: function(data, status) {
-      console.log(data)
       document.getElementById('appointments').innerHTML = ""
       var arrayLength = data.length;
       for (var i = 0; i < arrayLength; i++) {
-          AddAppointmentToHtml(i, data[i]._id, data[i].name, data[i].bdate, data[i].time, data[i].estDuration)
+          AddAppointmentToHtml(i, data[i]._id, data[i].name, data[i].bdate, data[i].time, data[i].estDuration, data[i].finished)
       }
     },
     error: function(data) {
@@ -119,36 +142,45 @@ function FixTableRows() {
 }
 
 // append an appointement in the html file
-function AddAppointmentToHtml(i, id, name, bdate, time, estDuration) {
-  var html = ""
+function AddAppointmentToHtml(i, id, name, bdate, time, estDuration, finished) {
+  var html = '<tr id=' + id + ' >'
   
-  html += '<tr id=' + id + ' >'
   html += '<th scope="row">'
   html += i+1
   html += '</th>'
+  
   html += '<td>'
   html += name
   html += '</td>'
+  
   html += '<td>'
   var date = new Date(bdate)
   html += date.getDate() + '.'
   html += (date.getMonth()+1)+ '.'
   html += date.getFullYear()
   html += '</td>'
+  
   html += '<td>'
   html += time
   html += '</td>'
+  
   html += '<td>'
   html += estDuration
   html += '</td>'
+  
   html += '<td>'
-  html += '<input type="checkbox">'
+  var checked = ""
+  if (finished) {checked = " checked"}
+  html += '<input id=' + id + '_c type="checkbox" onclick="ChangeStatus(\'' + id +'\')"' + checked + '>'
   html += '</td>'
+  
   html += '<td>'
-  html += '<a id="' + i + '" class="btn btn-default" onclick="deleteAppointment(\'' + id +'\')">Löschen</a>'
+  html += '<a class="btn btn-default" onclick="deleteAppointment(\'' + id +'\')">Löschen</a>'
   html += '</td>'
+  
   html += '</tr>'
   
+  // append new code to appointements table
   document.getElementById('appointments').innerHTML += html
 }
 
