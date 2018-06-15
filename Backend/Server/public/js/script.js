@@ -29,13 +29,18 @@ $(document).ready(function () {
 
     var name = $("#patientname").val();
     var pdate = $("#patientdate").val();
-	pObj = {name:name,bdate:pdate}
-      
+
+    if(name == "" || pdate == ""){
+      $('.alert').hide().show();
+      return;
+    }
+
+	  pObj = {name:name,bdate:pdate}
+
     localStorage.setItem("pname",name);
     localStorage.setItem("pdate",pdate);
 
-	pObj = {name:name,bdate:pdate}
-
+	  pObj = {name:name,bdate:pdate}
 
 	$.ajax({
 		url:"/getQueueInformations",
@@ -45,13 +50,11 @@ $(document).ready(function () {
 	    dataType:"json",
 	    success: function(res){
 			console.log("Appointment found");
-            
             $(location).attr('href', '/warteliste.html')
         },
         error: function(res) {
-
-            alert("No Appointment found");
-        } 
+            $('.alert').show();
+        }
 	});
   });
 });

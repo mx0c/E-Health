@@ -35,6 +35,7 @@ $(document).ready(function () {
       "authorization":cookieValue
     },
     success: function(data, status) {
+      console.log(data)
       var html = ""
       var arrayLength = data.length;
       for (var i = 0; i < arrayLength; i++) {
