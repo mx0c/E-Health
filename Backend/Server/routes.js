@@ -44,11 +44,6 @@ module.exports = router => {
     })
   });
 
-  //wird entfernt
-  router.get('/praxis.html', function (req, res) {
-    res.sendFile(path.join(__dirname + '/../../Frontend/praxis.html'));
-  });
-
   router.post('/isTokenValid',(req,res) => {
     dbInterface.isTokenValid(req.headers.authorization)
     .then(()=>{

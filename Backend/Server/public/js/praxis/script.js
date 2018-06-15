@@ -31,6 +31,7 @@ $(document).ready(function () {
       $("#date").val('')
       $("#time").val('')
       $("#duration").val('')
+      
       // send data to database
       $.ajax({
         url:"/createAppointment",
