@@ -20,7 +20,6 @@ function verifyJwt(token){
 
 function compareAppointments(a1,a2){
 	try{
-    console.log(a1.name == a2.name , a1.bdate.toString() == a2.bdate.toString() , a1.date.toString() == a2.date.toString() , a1.time == a2.time , a1.estDuration == a2.estDuration)
 		return (a1.name == a2.name && a1.bdate.toString() == a2.bdate.toString() && a1.date.toString() == a2.date.toString() && a1.time == a2.time && a1.estDuration == a2.estDuration)
 	}catch(e){
 		return false
@@ -117,10 +116,10 @@ exports.getQueueInformations = (name,bdate) => {
     if (err) resolve(500);
 	  var dbo = db.db("e-health-db");
       //find my next appointment
-      dbo.collection("appointments").find({name: name, bdate: new Date(bdate)}).sort({date: -1}).toArray((err, result)=>{
+      dbo.collection("appointments").find({name: name, bdate: new Date(bdate)}).sort({date: -1, finished:false}).toArray((err, result)=>{
         if (err) resolve(500);
         appointment = result[0];
-        dbo.collection("appointments").find().sort({date: -1}).toArray((err, result)=>{
+        dbo.collection("appointments").find().sort({date: -1, finished:false}).toArray((err, result)=>{
           var count = 0;
           result.forEach(elem=>{
             if(compareAppointments(elem,appointment)){
