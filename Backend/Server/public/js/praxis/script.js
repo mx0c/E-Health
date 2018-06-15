@@ -49,7 +49,7 @@ $(document).ready(function () {
           html += '<td>'
           var date = new Date(data[i].bdate)
           html += date.getDate() + '.'
-          html += date.getMonth()+ '.'
+          html += (date.getMonth()+1)+ '.'
           html += date.getFullYear()
           html += '</td>'
           html += '<td>'
