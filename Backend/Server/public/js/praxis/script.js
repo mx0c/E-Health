@@ -6,6 +6,11 @@ $(document).ready(function () {
   // load appointments
   GetAppointments()
   
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth()+1; //January is 0!
+  var yyyy = today.getFullYear();
+  document.getElementById("CurrentDate").innerHTML = "Warteliste für den " + dd + '.' + mm + '.' + yyyy
   
   // create user function
   // called after pressing "Termin Anlegen" button
