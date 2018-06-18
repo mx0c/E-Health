@@ -16,7 +16,7 @@ $(document).ready(function () {
       var aTime = data.appointmentTime
       var dTime = data.delayDuration
       var position = data.position
-
+if (position > 0){
       var aTimeNum = (parseInt(aTime.split(":")[0]) * 60) + parseInt(aTime.split(":")[1]);
       var dTimeNum = parseInt(dTime);
       var total = aTimeNum + dTimeNum;
@@ -28,6 +28,9 @@ $(document).ready(function () {
       document.getElementById('pdelay').innerHTML = ("Leider gibt es eine Verspätung  von +"+dTime+" Minuten")
       document.getElementById('pos').innerHTML = ("Vor Ihnen sind noch "+ position+" weitere Patienten. Ihr Termin wird vorraussichtlich "+dTime+" Minuten später statt finden!")
       document.getElementById('nTime').innerHTML = ("Geschätzter tatsächlicher Termin: "+newTime+" Uhr.")
+} else {
+    document.getElementById('pdelay').innerHTML = ("Ihr Termin findet pünktlich um "+ aTime + " Uhr statt.")
+}
     },
     error: function(data) {
         document.getElementById('appointment').innerHTML = "Authorization FAILED"
