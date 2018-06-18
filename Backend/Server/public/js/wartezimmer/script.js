@@ -26,7 +26,11 @@ if (position > 0){
 
       document.getElementById('appointment').innerHTML = ("Ihr Termin ist ursprünglich um "+ aTime +" Uhr.")
       document.getElementById('pdelay').innerHTML = ("Leider gibt es eine Verspätung  von +"+dTime+" Minuten")
-      document.getElementById('pos').innerHTML = ("Vor Ihnen sind noch "+ position+" weitere Patienten. Ihr Termin wird vorraussichtlich "+dTime+" Minuten später statt finden!")
+    if (positon = 1){
+      document.getElementById('pos').innerHTML = ("Vor Ihnen ist noch ein weiterer Patient. Ihr Termin wird vorraussichtlich "+dTime+" Minuten später statt finden!")
+    } else {
+    document.getElementById('pos').innerHTML = ("Vor Ihnen sind noch "+ position+" weitere Patienten. Ihr Termin wird vorraussichtlich "+dTime+" Minuten später statt finden!")
+    }
       document.getElementById('nTime').innerHTML = ("Geschätzter tatsächlicher Termin: "+newTime+" Uhr.")
 } else {
     document.getElementById('pdelay').innerHTML = ("Ihr Termin findet pünktlich um "+ aTime + " Uhr statt.")
