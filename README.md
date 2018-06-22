@@ -21,4 +21,5 @@ Project Digital Waitingroom
 | GET           | /getQueueInformations  | **QueryString:** name:String, bdate:string(YYYY-MM-DD)  | JSON with position, appointmentTime, delayDuration |
 | POST		      | /deleteAppointment | **Body:** id:String(_id von appointment) </br> **Headers:** authorization:String(JWToken)| 200 OK |
 | POST          | /changeAppointmentStatus | **Body:** id:String(_id von appointment), status:boolean(true=finished)</br>**Headers:** authorization:String(JWToken)| 200 OK |
-| POST          | /isTokenValid | **Headers:** authorization:String(JWToken)| valid=200 OK; notValid=401 UNAUTHORIZED |
+| POST          | /setDifferenceTime | **Headers:** authorization:String(JWToken) </br> **Body:** dTime:int | valid=200 OK; notValid=401 UNAUTHORIZED |
+| POST          | /getDifferenceTime | **Headers:** authorization:String(JWToken)  |  valid=200 OK; notValid=401 UNAUTHORIZED |

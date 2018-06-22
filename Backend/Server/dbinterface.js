@@ -28,15 +28,6 @@ function compareAppointments(a1,a2){
 
 //*************************************************************************************************
 
-exports.isTokenValid = (token) => {
-  return new Promise((resolve,reject)=>{
-    if (!verifyJwt(token)){
-      return reject(401)
-    }
-    resolve()
-  })
-}
-
 exports.changeAppointmentStatus = (id, token, status) => {
   return new Promise((resolve,reject)=>{
     if (!verifyJwt(token)) return reject(401)
@@ -60,8 +51,29 @@ exports.setDifferenceTime = (dTime,token) => {
     MongoClient.connect(url, (err, db) => {
       if (err) return reject(500)
       var dbo = db.db("e-health-db")
-      dbo.collection("differenceTime").find({}).toArray(function(err, result)
+      dbo.collection("differenceTime").updateOne({},{$set: {dTime:dTime}},function(err, result){
+        if (err) return reject(500)
+        db.close();
+        resolve()
+      })
+      reject(500);
+  })
+}
 
+exports.getDifferenceTime = (token) => {
+  return new Promise((resolve,reject)=>{
+    if (!verifyJwt(token)) return reject(401)
+    MongoClient.connect(url, (err, db) => {
+      if (err) return reject(500)
+      var dbo = db.db("e-health-db")
+      dbo.collection("differenceTime").find({}).toArray(function(err, result){
+        if (err) return reject(500)
+        result.forEach(elem=>{
+          db.close();
+          resolve(elem);
+        })
+      })
+      reject(500);
   })
 }
 

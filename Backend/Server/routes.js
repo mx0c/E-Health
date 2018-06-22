@@ -19,11 +19,29 @@ module.exports = router => {
   })
 
   router.post('/setDifferenceTime',(req,res)=>{
-
+    dbInterface.setDifferenceTime(req.body.dTime,req.headers.authorization)
+    .then(()=>{
+      res.sendStatus(200);
+    }).catch(errCode=>{
+      if (errCode >= 100 && errCode < 600){
+        res.sendStatus(errCode);
+      }else{
+        res.sendStatus(500);
+      }
+    })
   })
 
   router.post('/getDifferenceTime',(req,res)=>{
-
+    dbInterface.getDifferenceTime(req.headers.authorization)
+    .then(()=>{
+      res.sendStatus(200);
+    }).catch(errCode=>{
+      if (errCode >= 100 && errCode < 600){
+        res.sendStatus(errCode);
+      }else{
+        res.sendStatus(500);
+      }
+    })
   })
 
   router.post('/changeAppointmentStatus',(req,res)=>{
@@ -51,19 +69,6 @@ module.exports = router => {
   		}
     })
   });
-
-  router.post('/isTokenValid',(req,res) => {
-    dbInterface.isTokenValid(req.headers.authorization)
-    .then(()=>{
-      res.sendStatus(200)
-    }).catch((errCode)=>{
-      if (errCode >= 100 && errCode < 600){
-  			res.sendStatus(errCode);
-  		}else{
-  			res.sendStatus(500);
-  		}
-    })
-  })
 
   router.post('/login',(req, res) => {
     dbInterface.checkUser(req.body.username,req.body.password)
