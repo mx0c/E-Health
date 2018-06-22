@@ -18,6 +18,14 @@ module.exports = router => {
     })
   })
 
+  router.post('/setDifferenceTime',(req,res)=>{
+
+  })
+
+  router.post('/getDifferenceTime',(req,res)=>{
+
+  })
+
   router.post('/changeAppointmentStatus',(req,res)=>{
     dbInterface.changeAppointmentStatus(req.body.id, req.headers.authorization,req.body.status)
     .then(()=>{

@@ -54,6 +54,17 @@ exports.changeAppointmentStatus = (id, token, status) => {
   })
 }
 
+exports.setDifferenceTime = (dTime,token) => {
+  return new Promise((resolve,reject)=>{
+    if (!verifyJwt(token)) return reject(401)
+    MongoClient.connect(url, (err, db) => {
+      if (err) return reject(500)
+      var dbo = db.db("e-health-db")
+      dbo.collection("differenceTime").find({}).toArray(function(err, result)
+
+  })
+}
+
 exports.deleteAppointment = (id, token) => {
   return new Promise((resolve,reject) => {
     if (!verifyJwt(token)) return reject(401)
