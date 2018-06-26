@@ -50,6 +50,14 @@
             <button id="userlogin" class="btn btn-success">
               Sign in
             </button>
+
+            <div id="praxisLoginAlert" class="alert alert-info alert-dismissible" role="alert">
+              <strong>Fehler!</strong> Benutzername oder Passwort ist falsch!
+              <button type="button" class="close" onclick="$('#praxisLoginAlert').hide()">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+
           </div>
         </div>
         <!--/.navbar-collapse -->
@@ -66,9 +74,9 @@
     </div>
     <div class="container">
       <!-- Example row of columns -->
-      <div class="alert alert-info alert-dismissible" role="alert">
+      <div id="patientLoginAlert" class="alert alert-info alert-dismissible" role="alert">
         <strong>Fehler!</strong> Kein Termin für diesen User gefunden.
-        <button type="button" class="close" onclick="$('.alert').hide()">
+        <button type="button" class="close" onclick="$('#patientLoginAlert').hide()">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
