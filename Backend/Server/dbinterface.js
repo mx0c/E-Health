@@ -66,12 +66,10 @@ exports.getDifferenceTime = (token) => {
 		MongoClient.connect(url, (err, db) => {
 		  if (err) return reject(500)
 		  var dbo = db.db("e-health-db")
-		  dbo.collection("differenceTime").find({}).toArray(function(err, result){
-			if (err) return reject(500)
-			result.forEach(elem=>{
+		  dbo.collection("differenceTime").find({},function(err, result){
+			  if (err) return reject(500)
 			  db.close();
-			  resolve(elem);
-			})
+			  resolve(result);
 		  })
 		  reject(500);
 		})

@@ -33,8 +33,8 @@ module.exports = router => {
 
   router.post('/getDifferenceTime',(req,res)=>{
     dbInterface.getDifferenceTime(req.headers.authorization)
-    .then(()=>{
-      res.sendStatus(200);
+    .then((dTime)=>{
+	  res.send(dTime)
     }).catch(errCode=>{
       if (errCode >= 100 && errCode < 600){
         res.sendStatus(errCode);
