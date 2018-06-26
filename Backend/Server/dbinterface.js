@@ -47,6 +47,7 @@ exports.changeAppointmentStatus = (id, token, status) => {
 
 exports.setDifferenceTime = (dTime,token) => {
 	return new Promise((resolve,reject)=>{
+		console.log(dTime)
 		if (!verifyJwt(token)) return reject(401)
 		MongoClient.connect(url, (err, db) => {
 		  if (err) return reject(500)
@@ -54,9 +55,8 @@ exports.setDifferenceTime = (dTime,token) => {
 		  dbo.collection("differenceTime").updateOne({},{$set: {dTime:dTime}},function(err, result){
 			if (err) return reject(500)
 			db.close();
-			resolve()
+			return resolve()
 		  })
-		  reject(500);
 		})
 	})
 }
@@ -66,12 +66,12 @@ exports.getDifferenceTime = (token) => {
 		MongoClient.connect(url, (err, db) => {
 		  if (err) return reject(500)
 		  var dbo = db.db("e-health-db")
-		  dbo.collection("differenceTime").find({},function(err, result){
+		  dbo.collection("differenceTime").findOne({},function(err, result){
+			  console.log(err)
 			  if (err) return reject(500)
 			  db.close();
-			  resolve(result);
+			  return resolve(result);
 		  })
-		  reject(500);
 		})
     })
 }

@@ -21,7 +21,6 @@ $(document).ready(function () {
         error: function(data) {
         console.log("login failed");
         document.cookie="access_token= "
-        $('#praxisLoginAlert').show();
       }
     });
   });
@@ -32,7 +31,7 @@ $(document).ready(function () {
     var pdate = $("#patientdate").val();
 
     if(name == "" || pdate == ""){
-      $('#patientLoginAlert').hide().show();
+      $('.alert').hide().show();
       return;
     }
 
@@ -41,7 +40,7 @@ $(document).ready(function () {
     localStorage.setItem("pname",name);
     localStorage.setItem("pdate",pdate);
 
-	  pObj = {name:name,bdate:pdate}
+	pObj = {name:name,bdate:pdate}
 
 	$.ajax({
 		url:"/getQueueInformations",
@@ -54,7 +53,7 @@ $(document).ready(function () {
             $(location).attr('href', '/warteliste.html')
         },
         error: function(res) {
-            $('#patientLoginAlert').show();
+            $('.alert').show();
         }
 	});
   });
