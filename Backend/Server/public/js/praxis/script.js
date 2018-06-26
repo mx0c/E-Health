@@ -2,15 +2,41 @@
 // document ready function
 $(document).ready(function () {
   console.log("praxis page loaded");
+  var cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1");
 
   // load appointments
   GetAppointments()
+
+
+  getDifference()
+
 
   //var today = new Date();
   //var dd = today.getDate();
   //var mm = today.getMonth()+1; //January is 0!
   //var yyyy = today.getFullYear();
   //document.getElementById("CurrentDate").innerHTML = "Warteliste für den " + dd + '.' + mm + '.' + yyyy
+
+
+
+  $.ajax({
+    url:"/getAppointments",
+    type:"GET",
+    headers: {
+      "authorization":cookieValue
+    },
+    success: function(data, status) {
+      document.getElementById('appointments').innerHTML = ""
+      var arrayLength = data.length;
+      for (var i = 0; i < arrayLength; i++) {
+          AddAppointmentToHtml(i, data[i]._id, data[i].name, data[i].bdate, data[i].date, data[i].time, data[i].estDuration, data[i].finished)
+      }
+    },
+    error: function(data) {
+      document.getElementById('appointments').innerHTML = "<p>authorization FAILED</p>"
+    }
+  });
+
 
   // create user function
   // called after pressing "Termin Anlegen" button
@@ -57,6 +83,33 @@ $(document).ready(function () {
 
   });
 
+function refreshDifference(difference) {
+  if (difference < 0) {
+    document.getElementById("CurrentDate").innerHTML = "Termine (Aktuelle verspätung: " + parseInt(difference/60) + " Minuten)"
+  }
+  else {
+    document.getElementById("CurrentDate").innerHTML = "Termine (Keine verspätung: " + parseInt(difference/60) + " Minuten Puffer!)"
+  }
+}
+
+function getDifference() {
+  var cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+  $.ajax({
+    url:"/getDifferenceTime",
+    type:"POST",
+    headers: {
+    "authorization":cookieValue
+    },
+    success: function(data, status) {
+      refreshDifference(data.dTime)
+    },
+    error: function (xhr, ajaxOptions, thrownError) {
+      console.log(xhr.status);
+      console.log(thrownError);
+    }
+  });
+}
+
 // delete appointement function
 // called after pressing "Löschen" button of an appointement
 function deleteAppointment(id) {
@@ -96,6 +149,42 @@ function ChangeStatus(id) {
 
   var checkbox = document.getElementById(id+"_c");
   var status = checkbox.checked
+
+  if (status) {
+    // convert current date to seconds
+    var dTime = new Date();
+    var currentDate = parseInt(dTime.getTime()/1000)
+
+    // convert planed date from table to seconds
+    var strDate = document.getElementById(id+"_d").innerHTML
+    var strTime = document.getElementById(id+"_t").innerHTML
+    var splitDate = strDate.split(".");
+    var splitTime = strTime.split(":");
+    var pDate = new Date(splitDate[2], splitDate[1]-1, splitDate[0], splitTime[0], splitTime[1], 0, 0)
+    var plannedDate = parseInt(pDate.getTime()/1000)
+
+    // difference in seconds
+    var difference = plannedDate-currentDate
+
+    $.ajax({
+       url:"/setDifferenceTime",
+       type:"POST",
+       headers: {
+       "authorization":cookieValue
+       },
+       data:JSON.stringify({dTime:difference}),
+       contentType:"application/json; charset=utf8",
+       success: function() {
+         console.log("dTime set")
+         refreshDifference(difference)
+       },
+       error: function (xhr, ajaxOptions, thrownError) {
+         console.log("dTime set FAILED")
+         console.log(xhr.status);
+         console.log(thrownError);
+       }
+     });
+  }
 
   $.ajax({
     url:"/changeAppointmentStatus",
@@ -165,14 +254,14 @@ function AddAppointmentToHtml(i, id, name, bdate, apdate, time, estDuration, fin
   html += date.getFullYear()
   html += '</td>'
 
-  html += '<td>'
+  html += '<td id=' + id + '_d >'
   var apDate = new Date(apdate)
   html += apDate.getDate() + '.'
   html += (apDate.getMonth()+1)+ '.'
   html += apDate.getFullYear()
   html += '</td>'
 
-  html += '<td>'
+  html += '<td id=' + id + '_t >'
   html += time
   html += '</td>'
 
