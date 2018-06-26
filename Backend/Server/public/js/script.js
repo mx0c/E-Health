@@ -21,6 +21,7 @@ $(document).ready(function () {
         error: function(data) {
         console.log("login failed");
         document.cookie="access_token= "
+        $('#praxisLoginAlert').show();
       }
     });
   });
@@ -31,7 +32,7 @@ $(document).ready(function () {
     var pdate = $("#patientdate").val();
 
     if(name == "" || pdate == ""){
-      $('.alert').hide().show();
+      $('#patientLoginAlert').hide().show();
       return;
     }
 
@@ -53,7 +54,7 @@ $(document).ready(function () {
             $(location).attr('href', '/warteliste.html')
         },
         error: function(res) {
-            $('.alert').show();
+            $('#patientLoginAlert').show();
         }
 	});
   });
