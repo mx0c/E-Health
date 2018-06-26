@@ -15,27 +15,28 @@ MongoClient.connect(url, function(err, db) {
       console.log("1 document inserted");
     });
     console.log("appointments Collection created!");
-  });
 
-  //Create Users collection
-  dbo.createCollection("users", function(err, res) {
-    if (err) throw err;
-    console.log("user Collection created!");
-    var myobj = { username: "admin", password: "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918" };
-    dbo.collection("users").insertOne(myobj, function(err, res) {
-      if (err) throw err;
-      console.log("1 document inserted");
-    });
-  });
+	  //Create Users collection
+	  dbo.createCollection("users", function(err, res) {
+		if (err) throw err;
+		console.log("user Collection created!");
+		var myobj = { username: "admin", password: "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918" };
+		dbo.collection("users").insertOne(myobj, function(err, res) {
+		  if (err) throw err;
+		  console.log("1 document inserted");
+		});
 
-  //Create differenceTime collection
-  dbo.createCollection("differenceTime", function(err, res) {
-    var obj = {dTime:0}
-    dbo.collection("differenceTime").insertOne(obj,(err,res)=>{
-      if (err) throw err;
-      console.log("1 document inserted");
-    })
-  });
-  
-  db.close();
+		  //Create differenceTime collection
+		  dbo.createCollection("differenceTime", function(err, res) {
+			var obj = {dTime:0}
+			dbo.collection("differenceTime").insertOne(obj,(err,res)=>{
+			  if (err) throw err;
+			  console.log("1 document inserted");
+			})
+
+		  
+		  db.close();
+			});
+		});  
+	});  
 });
