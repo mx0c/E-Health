@@ -32,7 +32,7 @@ module.exports = router => {
   })
 
   router.post('/getDifferenceTime',(req,res)=>{
-    dbInterface.getDifferenceTime(req.headers.authorization)
+    dbInterface.getDifferenceTime()
     .then((dTime)=>{
 	  res.send(dTime)
     }).catch(errCode=>{

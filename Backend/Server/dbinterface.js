@@ -60,9 +60,8 @@ exports.setDifferenceTime = (dTime,token) => {
 		})
 	})
 }
-exports.getDifferenceTime = (token) => {
+exports.getDifferenceTime = () => {
 	return new Promise((resolve,reject)=>{
-		if (!verifyJwt(token)) return reject(401)
 		MongoClient.connect(url, (err, db) => {
 		  if (err) return reject(500)
 		  var dbo = db.db("e-health-db")
