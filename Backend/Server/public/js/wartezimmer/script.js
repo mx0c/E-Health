@@ -1,5 +1,5 @@
 $(document).ready(function () {
- // get Patient Login Infos  
+ // get Patient Infos  
   var pname = localStorage.getItem("pname");
   var pdate = localStorage.getItem("pdate");
   pObj = {name:pname,bdate:pdate}
@@ -16,7 +16,7 @@ $(document).ready(function () {
     success: function(data, status) {
       var aTime = data.appointmentTime
       var position = data.position
-
+// Get DelayTime and write all data into the html
 $.ajax({
     url:"/getDifferenceTime",
     type:"POST",
@@ -27,17 +27,26 @@ $.ajax({
       var total = aTimeNum + dTimeNum;
       var hour = Math.floor(total / 60);
       var minutes = total % 60;
-      var newTime = hour + ':' + minutes;
-    if (position > 0 && delay !== 0){
+        if (minutes <10){
+            var newTime = hour + ':0' + minutes;
+        }
+        else{
+      var newTime = hour + ':' + minutes;}
+    if (position >= 0 && delay >= 10){ //Mit 10 min Pufferzeit. Keine Verpätung innerhalb dieser Toleranz
       document.getElementById('appointment').innerHTML = ("Ihr Termin ist ursprünglich um "+ aTime +" Uhr.")
       document.getElementById('pdelay').innerHTML = ("Leider gibt es eine Verspätung von "+delay+" Minuten")
-      if (positon = 1){
+    if (position < 1){ //Falls kein Patient vor einem ist, dennoch eine Verspätung existiert
+         document.getElementById('pos').innerHTML = ("Ihr Termin wird vorraussichtlich "+delay+" Minuten später statt finden!")
+         document.getElementById('nTime').innerHTML = ("Geschätzter tatsächlicher Termin: "+newTime+" Uhr.")
+    }
+    else{
+    if (position < 2){ //Falls ein Patient vor einem ist, dennoch eine Verspätung existiert
       document.getElementById('pos').innerHTML = ("Vor Ihnen ist noch ein weiterer Patient. Ihr Termin wird vorraussichtlich "+delay+" Minuten später statt finden!")
-    } else {
+    } else { //Falls min. 2 Patienten vor einem ist, dennoch eine Verspätung existiert
     document.getElementById('pos').innerHTML = ("Vor Ihnen sind noch "+ position+" weitere Patienten. Ihr Termin wird vorraussichtlich "+delay+" Minuten später statt finden!")
     }
     document.getElementById('nTime').innerHTML = ("Geschätzter tatsächlicher Termin: "+newTime+" Uhr.")
-    } else {
+    }} else {
     document.getElementById('pdelay').innerHTML = ("Ihr Termin findet pünktlich um "+ aTime + " Uhr statt.")
     }
     },
