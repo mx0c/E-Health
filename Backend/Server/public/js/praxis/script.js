@@ -164,7 +164,7 @@ function ChangeStatus(id) {
     var plannedDate = parseInt(pDate.getTime()/1000)
 
     // difference in seconds
-    var difference = plannedDate-currentDate
+    var difference = currentDate-plannedDate
 
     $.ajax({
        url:"/setDifferenceTime",
