@@ -84,11 +84,11 @@ $(document).ready(function () {
   });
 
 function refreshDifference(difference) {
-  if (difference < 0) {
+  if (difference > 0) {
     document.getElementById("CurrentDate").innerHTML = "Termine (Aktuelle verspätung: " + parseInt(difference/60) + " Minuten)"
   }
   else {
-    document.getElementById("CurrentDate").innerHTML = "Termine (Keine verspätung: " + parseInt(difference/60) + " Minuten Puffer!)"
+    document.getElementById("CurrentDate").innerHTML = "Termine (Keine verspätung: " + -parseInt(difference/60) + " Minuten Puffer!)"
   }
 }
 
@@ -158,13 +158,15 @@ function ChangeStatus(id) {
     // convert planed date from table to seconds
     var strDate = document.getElementById(id+"_d").innerHTML
     var strTime = document.getElementById(id+"_t").innerHTML
+    var strDur = document.getElementById(id+"_dur").innerHTML
+    var dur = parseInt(strDur)
     var splitDate = strDate.split(".");
     var splitTime = strTime.split(":");
     var pDate = new Date(splitDate[2], splitDate[1]-1, splitDate[0], splitTime[0], splitTime[1], 0, 0)
     var plannedDate = parseInt(pDate.getTime()/1000)
-
+    
     // difference in seconds
-    var difference = currentDate-plannedDate
+    var difference = currentDate-(plannedDate+(dur*60))
 
     $.ajax({
        url:"/setDifferenceTime",
@@ -265,7 +267,7 @@ function AddAppointmentToHtml(i, id, name, bdate, apdate, time, estDuration, fin
   html += time
   html += '</td>'
 
-  html += '<td>'
+  html += '<td id=' + id + '_dur >'
   html += estDuration
   html += '</td>'
 
